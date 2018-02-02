@@ -14,6 +14,16 @@ class Home extends React.Component {
     this.handleSearched = this.handleSearched.bind(this);
   }
 
+  componentDidMount(){
+    console.log('home component mounted')
+    var display = this.props.items;
+    this.setState({
+      displayedItems: display
+    }), function() {
+      console.log('in home' ,this.state.displayedItems)
+    }
+  }
+
   handleSearched (event) {
     var state = this;
     this.setState({

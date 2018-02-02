@@ -41,6 +41,7 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
     this.handleFacebookLogin = this.handleFacebookLogin.bind(this);
+    this.anonymousLogin = this.anonymousLogin.bind(this);
   }
 
   handleRegister(){
@@ -81,7 +82,36 @@ class Login extends React.Component {
     		});
       }
 
+      anonymousLogin(){
+        var context = this;
+        firebase.auth().signInAnonymously().catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+        });
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            var userObject = {
+              
+            }
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            console.log('guest user info ', user)
+            // ...
+          } else {
+            // User is signed out.
+            // ...
+            console.log('guest user signed out')
+          }
+          // ...
+        });
+        
+        context.props.auth(true);
 
+        
+      }
       handleFacebookLogin(){
         var context = this;
         firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -143,6 +173,8 @@ class Login extends React.Component {
                               <button className="btn btn-primary">Login</button>
                               <button className="btn btn-primary btn-facebook" onClick={this.handleFacebookLogin}>Facebook</button>
                               <button className='btn btn-secondary btn-sign-up' onClick={this.handleRegister}>Sign Up</button>
+                              <button className='btn btn-secondary btn-sign-up' onClick={this.anonymousLogin}>Login as Guest</button>
+
                           </div>
                           
                           

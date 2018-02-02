@@ -27,9 +27,10 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        var context = this;
         if( this.props.isAuth){
             console.log('is auth, so fetch data')
-            this.fetch()
+            context.fetch()
         } else {
             console.log(' not auth, dont fetch data yet'
             )
@@ -41,10 +42,16 @@ class App extends React.Component {
         var context = this;
         fetchItems((data) => {
             context.props.getItems(data);
+            var itemsArr = context.state.allItems.slice();
+            var displayArr = context.state.displayedItems.slice()
+            data.forEach(element => {
+                displayArr.push(element);
+            });
+            console.log('data is ', data)
             context.setState({
-                allItems: data,
-                displayedItems: data
+                displayedItems: displayArr
             })
+            console.log('state', context.state)
         });
     }
 

@@ -34,5 +34,6 @@ app.use('/', Router);
 let port = 1764;
 
 app.listen(port, () => {
+  console.log('build directory', path.join(__dirname, '/../client/build/'))
   console.log(`app listening on port ${port}!`);
 });
